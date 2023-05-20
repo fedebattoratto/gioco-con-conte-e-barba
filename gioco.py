@@ -9,6 +9,8 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 600
 
+#aggiungo labirnto
+
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
