@@ -30,32 +30,45 @@ square_size = 40
 # Posizione iniziale del quadrato
 quadrato_x = square_size
 quadrato_y = square_size
-class Player(pygame.sprite.Sprite):
-    def _init_(self):
-        super()._init_()
-        self.image_player = pygame.image.load("labirinto/barba.jpeg")
-        self.rect_player = self.image.get.rect(center = (20,20))
-        self.self.square_size = 40
-        self.quadrato_y = 40
-        self.quadrato_x = 40
+# class Player(pygame.sprite.Sprite):
+#     def _init_(self):
+#         super()._init_()
+#         self.image_player = pygame.image.load("labirinto/barba.jpeg")
+#         self.rect_player = self.image.get.rect(center = (20,20))
+#         self.self.square_size = 40
+#         self.quadrato_y = 40
+#         self.quadrato_x = 40
+#disegno il quadrato
+def quadrato():
+    pygame.draw.rect(screen, RED, (quadrato_x, quadrato_y, square_size, square_size))
 
 
 
-player = pygame.sprite.GroupSingle()
-player.add(Player())
+# player = pygame.sprite.GroupSingle()
+# player.add(Player())
 
 #qui creiamo il labirinto iniziale, poi ci lavoraiamo ingrandendolo
 labirinto = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 1, 1, 0, 1, 1, 0, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-    [1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-    [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-    [1, 1, 1, 1, 1, 1, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    [0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0],
+    [0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
+    [0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
+    [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1],
+    [0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
+    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+    [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 4],
+    [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+    [0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1],
+    [0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1 , 1, 1],
 ]
 
 #qua con le matrici disegnaimo il labirninto
@@ -88,5 +101,6 @@ while True:
                     quadrato_x += square_size
     
     lab()
+    quadrato()
    
     pygame.display.flip()
