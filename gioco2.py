@@ -1,11 +1,11 @@
-
 import os
 import sys
 import random
 import pygame
-
-
-
+import subprocess
+subprocess.call('schermata.py', shell=True)
+# f=open("schermata.py", "r", encoding='utf-8')
+# print(f.read())
 
 class Player(object):
     
@@ -14,7 +14,7 @@ class Player(object):
 
     def move(self, dx, dy):
         
-        
+        # Move each axis separately. Note that this checks for collisions both times.
         if dx != 0:
             self.move_single_axis(dx, 0)
         if dy != 0:
@@ -45,67 +45,46 @@ class Wall(object):
         walls.append(self)
         self.rect = pygame.Rect(pos[0], pos[1], 16, 16)
 
-
+# Initialise pygame
 os.environ["SDL_VIDEO_CENTERED"] = "1"
 pygame.init()
+
+# Set up the display
 pygame.display.set_caption("Get to the red square!")
-screen = pygame.display.set_mode((800, 800))
+screen = pygame.display.set_mode((600, 440))
 
 clock = pygame.time.Clock()
 walls = [] # List to hold the walls
 player = Player() # Create the player
-pygame.init()
 
-# #qua ci mettiamo le dimensione dello schermo 
-# WIDTH = 800
-# HEIGHT = 600
-
-
-# WHITE = (255, 255, 255)
-# RED = (255, 0, 0)
-# FPS=60
-# # Creazione della finestra di gioco
-# screen = pygame.display.set_mode((WIDTH, HEIGHT))
-# pygame.display.set_caption("Labirinto per gioco informatica")
-# clock = pygame.time.Clock()
-
-
-#qui creiamo il labirinto iniziale, poi ci lavoraiamo ingrandendolo
-labirinto = [
-    [0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0],
-    [0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
-    [0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
-    [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1],
-    [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1],
-    [0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1],
-    [0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
-    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
-    [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4],
-    [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-    [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
-    [0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1],
-    [0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-    [0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1 , 1, 1],
+# Holds the level layout in a list of strings.
+level = [
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "W                          WWWW    ",
+    "W         WWWWWW   WW   WWWWWW  WWW",
+    "W   WWWW       W   WWW  WW     WWWW",
+    "W   W        WWWW  WWWWWW         W",
+    "W WWW             WWW       WWW  WW",
+    "W   W     W W   WWWWWW WWWWWWWWWWWW",
+    "W   W     W   WWW WW        WWWWWWW",
+    "W   WWW WWW   W W  W   WWW   WW    ",
+    "W     W   W   W W  W  WW    W WWWWW",
+    "WWW   W   WWWWW W  W WWW    W WWWWW",
+    "W W      WW        W WWWW  WWWW  WW",
+    "W W           WWW   W           WWWW",
+    "W     W       W   W WWWWWWWWWWWW W",
+    "     WWWWWWWWWWWWWWW  WWW  WW    WW",
+    "                 WW   WW     W    W",
+    "WW          W           W         W",
+    "            WWWWW              WWWW",
+    "WW                       WWW      W",
+    "W         WW      WWWWWWWWW     WWW",
+    "WW                     EWWW        W",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 ]
-
-
-
-
-# #qua con le matrici disegnaimo il labirninto
-# def lab():
-#     for i in range(len(labirinto)):
-#         for j in range(len(labirinto[i])):
-#             if labirinto[i][j] == 1:
-#                 pygame.draw.rect(screen, WHITE, (j * square_size, i * square_size, square_size, square_size))
-
+# Parse the level string above. W = wall, E = exit
 x = y = 0
-for row in labirinto:
+for row in level:
     for col in row:
         if col == "W":
             Wall((x, y))
@@ -114,6 +93,7 @@ for row in labirinto:
         x += 16
     y += 16
     x = 0
+
 
 running = True
 while running:
@@ -125,7 +105,7 @@ while running:
             running = False
         if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
             running = False
- 
+
     # Move the player if an arrow key is pressed
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT]:
@@ -136,12 +116,20 @@ while running:
         player.move(0, -2)
     if key[pygame.K_DOWN]:
         player.move(0, 2)
- 
-    # Just added this to make it slightly fun ;)
+
+   
     if player.rect.colliderect(end_rect):
         pygame.quit()
+        f=open('labirinto2.py', 'r', encoding='utf-8')
+        print(f.read())
+        pygame.display.fill()
+
+
+
+
         sys.exit()
- 
+        
+
     # Draw the scene
     screen.fill((0, 0, 0))
     for wall in walls:
@@ -151,5 +139,5 @@ while running:
     # gfxdraw.filled_circle(screen, 255, 200, 5, (0,128,0))
     pygame.display.flip()
     clock.tick(360)
- 
+
 pygame.quit()
