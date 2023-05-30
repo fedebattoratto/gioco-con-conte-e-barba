@@ -4,8 +4,8 @@ import random
 import pygame
 import subprocess
 subprocess.call('schermata.py', shell=True)
-# f=open("schermata.py", "r", encoding='utf-8')
-# print(f.read())
+
+
 
 class Player(object):
     
@@ -120,13 +120,7 @@ while running:
    
     if player.rect.colliderect(end_rect):
         pygame.quit()
-        f=open('labirinto2.py', 'r', encoding='utf-8')
-        print(f.read())
-        pygame.display.fill()
-
-
-
-
+        
         sys.exit()
         
 

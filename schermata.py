@@ -1,5 +1,9 @@
 import pygame, sys
 from pygame.locals import *
+pygame.init()
+
+
+clock = pygame.time.Clock()
 
 larghezza_schermo = 800
 altezza_schermo = 600
@@ -37,3 +41,5 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+    clock.tick()
+    
