@@ -1,5 +1,7 @@
 import pygame
 import random
+pygame.init()
+pygame.font.init()
 
 sfondo=pygame.image.load('sfondo.png')
 biplano=pygame.image.load('biplano.png')
@@ -23,8 +25,7 @@ pygame.display.set_caption('er giocone')
 FPS=50
 
 avanzamento=3
-
-#FONT = pygame.font.SysFont('comic Sans MS', 50, bold=True)
+font2 = pygame.font.SysFont("Times New Roman", 12)
 
 def inizializza():
 
@@ -36,7 +37,7 @@ def inizializza():
 
     global tra_i_missili
 
-    #global punti
+    global punti
 
     global run
     biplanox, biplanoy= 60, 150
@@ -54,19 +55,19 @@ class Missili_classe:
 
     def __init__(self):
 
-        self.x=random.randint(800, 950)
+        self.x=random.randint(800,950)
 
         self.y=random.randint(1, 150)
 
     def scrolling(self):
 
-        self.x=avanzamento
+        self.x-=avanzamento
 
         finestra.blit(missile, (self.x, self.y))
 
         finestra.blit(missile, (self.x + 150, self.y + 25))
 
-    def collisione(self, biplano, biplanox, biplanoy):
+    def collisione(self, biplanox, biplanoy):
         tolleranza = 5
 
         biplano_dx=biplanox + biplano.get_width() - tolleranza
@@ -86,7 +87,7 @@ class Missili_classe:
             if biplano_su > missili_su and biplano_giu < missili_giu:
                 hai_perso()
 
-    def tra_i_missili(self, biplano, biplanoy):
+    def tra_i_missili(self, biplanoy):
 
         tolleranza = 5
 
@@ -109,11 +110,13 @@ def disegna():
 
     finestra.blit(base, (basex, 220))
 
-    #punti_render=FONT.render(str(punti), 1, (255, 0, 0))
+    punti_render=font2.render(str(punti), 1, (255, 0, 0))
 
-    #finestra.blit(punti_render, (644, 0))
+    finestra.blit(punti_render, (644, 0))
 
     finestra.blit(loghino, (0, 0))
+
+
 
 def aggiorna():
 
@@ -134,11 +137,12 @@ def hai_perso():
             if event.type==pygame.KEYDOWN and event.key==pygame.K_SPACE:
                 inizializza()
 
-                ricominciamo=True
+                ricomincia=True
             if event.type==pygame.QUIT:
                 pygame.quit
 
 inizializza()
+
 
 while True:
     basex -= avanzamento
@@ -148,6 +152,7 @@ while True:
 
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
+            pygame.quit()
             run = False
     
     tasti=pygame.key.get_pressed()
@@ -165,21 +170,20 @@ while True:
     if tasti[pygame.K_DOWN]:
         biplanoy += 1
 
-    if missili[-1].x < 150: 
-        missili.append(Missili_classe())
+    if missili[-1].x < 150:  missili.append(Missili_classe())
 
-    for m in missili:
-        m.collisione(biplano, biplanox, biplanoy)
+    for m in missili: 
+        m.collisione(biplanox, biplanoy)
 
     if not tra_i_missili:
         for m in missili:
-            if m.tra_i_missili(biplano, biplanox):
+            if m.tra_i_missili(biplanox):
                 tra_i_missili=True
                 break
     if biplanoy > 160: 
         hai_perso()
 
-    #punti +=1
+    punti+=1
 
     disegna()
     aggiorna()

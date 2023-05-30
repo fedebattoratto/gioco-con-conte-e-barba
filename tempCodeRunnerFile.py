@@ -1,2 +1,1 @@
-
-clock = pygame.time.Clock()
+biplano=pygame.transform.scale(biplano, (100, 52))
