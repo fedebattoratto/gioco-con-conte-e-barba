@@ -1,1 +1,1 @@
-biplano=pygame.transform.scale(biplano, (100, 52))
+tra_i_missili=True
