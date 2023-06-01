@@ -135,7 +135,7 @@
 #     if key[pygame.K_UP]:
 #         player.move(0, -2)
 #     if key[pygame.K_DOWN]:
-#         player.move(0, 2)
+#         player.move_ip(0, 2)
 
    
 #     if player.rect.colliderect(end_rect):
