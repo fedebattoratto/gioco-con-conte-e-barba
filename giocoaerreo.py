@@ -13,18 +13,19 @@ height = 600
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
-font2 = pygame.font.SysFont("", 12)
+font2 = pygame.font.SysFont("", 30)
 # Creazione finestra di gioco
-window = pygame.display.set_mode((781, 260))
-pygame.display.set_caption("Aereo che evita missili")
+window = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("gioco mega incredibile")
 
 # Caricamento immagini
 sfondo=pygame.image.load("sfondo.png")
+sfondo=pygame.transform.scale(sfondo, (800, 600))
 airplane_img = pygame.image.load("biplano.png")
-airplane_img=pygame.transform.scale(airplane_img, (80, 52))
+airplane_img=pygame.transform.scale(airplane_img, (100, 52))
 airplane_img=pygame.transform.flip(airplane_img, True, False)
 missile_img = pygame.image.load("missile.png")
-missile_img=pygame.transform.scale(missile_img, (40, 40))
+missile_img=pygame.transform.scale(missile_img, (50, 50))
 missile_img=pygame.transform.flip(missile_img, True, False)
 
 # Posizione iniziale dell'aereo
@@ -32,7 +33,7 @@ airplane_x = 50
 airplane_y = height // 2
 
 # Velocità dell'aereo
-airplane_speed = 5
+airplane_speed = 3
 
 # Lista dei missili
 missiles = []
