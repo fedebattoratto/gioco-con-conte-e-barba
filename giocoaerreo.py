@@ -2,6 +2,7 @@
 import pygame
 import random
 
+
 # Inizializzazione
 pygame.init()
 pygame.font.init()
@@ -20,7 +21,22 @@ font2 = pygame.font.SysFont("", 30)
 # Creazione finestra di gioco
 window = pygame.display.set_mode((1000, 800))
 pygame.display.set_caption("gioco mega incredibile")
+# pygame.mixer.pre_init('musica2.mp3')
 
+
+# numero=input('inserisci un numero')
+
+
+music=pygame.mixer.Sound("musica2.mp3")
+music.play()
+# elif numero=='2':
+#     music2=pygame.mixer.Sound('music2.mp3')
+#     music2.play()
+# elif numero=='3':
+#     music3=pygame.mixer.Sound('music3.mp3')
+#     music3.play()
+
+    
 class Button():
     def _init_(self,x,y,image,scale):
         larghezza = image.get_width()
@@ -51,9 +67,7 @@ airplane_img=pygame.transform.flip(airplane_img, True, False)
 missile_img = pygame.image.load("missile.png")
 missile_img=pygame.transform.scale(missile_img, (40, 40))
 missile_img=pygame.transform.flip(missile_img, True, False)
-resume_img = pygame.image.load("Resume.png")
-options_img = pygame.image.load("option.jpg")
-quit_img = pygame.image.load("quit.png")
+
 gameover=pygame.image.load("gameover.png").convert()
 
 #bottoni
@@ -69,6 +83,8 @@ airplane_speed = 3
 # Lista dei missili
 missiles = []
 punti=0
+
+
 
 def draw_gameover():   
     window.blit(gameover, (300,300))
@@ -114,8 +130,6 @@ while not game_over:
 
     if keys[pygame.K_RIGHT]:
         airplane_x+=airplane_speed
-
-
     # Movimento dei missili
     for missile in missiles:
         missile[0] -= 5
